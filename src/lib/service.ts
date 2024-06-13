@@ -10,7 +10,7 @@ const useGetApi = (params: string, query: string, headers: AxiosRequestConfig = 
   return useQuery({ queryKey: [query], queryFn: () => repository.getApi(params, headers), staleTime: Infinity });
 };
 
-const usePostApi = (params: string, headers: AxiosRequestConfig = {}) => {
+const usePostApi = async (params: string, headers: AxiosRequestConfig = {}) => {
   return useMutation({
     mutationFn: async (data: unknown) => {
       const response = await repository.postApi(params, data, headers);
