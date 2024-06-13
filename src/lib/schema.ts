@@ -11,4 +11,8 @@ const loginSchema = zodObject({
   password: zodType("password"),
 });
 
-export { registerSchema, loginSchema };
+const postingSchema = zodObject({
+  post: zodType("string"),
+});
+
+export { registerSchema, loginSchema, postingSchema };
