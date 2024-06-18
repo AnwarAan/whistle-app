@@ -1,9 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
-const AvatarBase = ({ imageUrl }: { imageUrl: string }) => {
+interface Props {
+  className?: string;
+  imageUrl: string;
+}
+const AvatarBase = ({ className, imageUrl }: Props) => {
   return (
     <div>
-      <Avatar>
+      <Avatar className={className}>
         <AvatarFallback>MC</AvatarFallback>
         <AvatarImage src={imageUrl} />
       </Avatar>

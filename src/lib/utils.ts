@@ -8,7 +8,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 type ZodType = ZodString | ZodNumber;
-type ZodOption = "string" | "number" | "email" | "password";
+type ZodOption = "string" | "number" | "email" | "password" | "any";
 
 const zodType = (zod: ZodOption, min: number = 3, max: number = 50) => {
   switch (zod) {
@@ -20,6 +20,8 @@ const zodType = (zod: ZodOption, min: number = 3, max: number = 50) => {
       return zodMessage(z.string().email(`Email Doesn't Valid`), min, max);
     case "password":
       return zodMessage(z.string(), 6, 16);
+    case "any":
+      return z.any();
   }
 };
 

@@ -1,9 +1,9 @@
-import { listMenu } from "./ListMenu";
+import { listMenu } from "../listing/ListMenu";
 import Link from "next/link";
 
 const ListMenu = () => {
   return (
-    <>
+    <div>
       {listMenu.map(({ icon, name, to }, i) => (
         <Link
           href={`/${to}`}
@@ -14,7 +14,7 @@ const ListMenu = () => {
           <span>{name}</span>
         </Link>
       ))}
-    </>
+    </div>
   );
 };
 
