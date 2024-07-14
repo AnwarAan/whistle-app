@@ -6,8 +6,9 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import icons from "../../../public/assets/icon";
 import Image from "next/image";
+import { getCookie } from "@/lib/helpers";
 
-const Authentication = () => {
+const Authentication = async () => {
   return (
     <div className="flex h-screen">
       <div className="w-3/5 flex items-center place-content-center">
