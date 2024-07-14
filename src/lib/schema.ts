@@ -15,8 +15,10 @@ const loginSchema = zodObject({
 });
 
 const postingSchema = zodObject({
-  post: zodType("string"),
+  content: zodType("string"),
 });
+
+const fetureSchema = zodObject({});
 
 const uploadImageSchema = zodObject({
   file: zodType("any")
@@ -25,4 +27,4 @@ const uploadImageSchema = zodObject({
     .refine((files) => ACCEPTED_IMAGE_TYPES.includes(files.type), "Only Format .jpeg .jpg .png .gif"),
 });
 
-export { registerSchema, loginSchema, postingSchema, uploadImageSchema };
+export { registerSchema, loginSchema, postingSchema, fetureSchema, uploadImageSchema };

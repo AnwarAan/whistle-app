@@ -1,3 +1,4 @@
+"use client";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import { Label } from "../ui/label";
 import Image from "next/image";
@@ -10,6 +11,10 @@ import {
   BookmarkAddOutlined,
   IosShare,
 } from "@mui/icons-material";
+import FormBase from "./FormBase";
+import { useZod } from "@/lib/CustomHook";
+import { fetureSchema } from "@/lib/schema";
+import { Button } from "../ui/button";
 
 export interface PropsCard {
   user: string;
@@ -19,27 +24,35 @@ export interface PropsCard {
 }
 
 const ExtraFeature = () => {
+  const form = useZod(fetureSchema);
+
   return (
-    <div className="flex justify-between w-full">
-      <div className="cursor-pointer space-x-1">
-        <CommentOutlined fontSize="small" />
-        <Label className="text-xs font-light">100</Label>
-      </div>
-      <div className="cursor-pointer space-x-1">
-        <FavoriteBorder fontSize="small" />
-        <Label className="text-xs font-light">100</Label>
-      </div>
-      <div className="cursor-pointer space-x-1">
-        <Visibility fontSize="small" />
-        <Label className="text-xs font-light">100</Label>
-      </div>
-      <div className="cursor-pointer space-x-1">
-        <BookmarkAddOutlined fontSize="small" />
-        <Label className="text-xs font-light">100</Label>
-      </div>
-      <div className="cursor-pointer space-x-1">
-        <IosShare fontSize="small" />
-        <Label className="text-xs font-light">100</Label>
+    <div>
+      <div className="flex justify-between w-full">
+        <div className="cursor-pointer space-x-1">
+          <CommentOutlined fontSize="small" />
+          <Label className="text-xs font-light">100</Label>
+        </div>
+        <div className="cursor-pointer space-x-1">
+          <FormBase form={form} url="/like">
+            <button type="submit">
+              <FavoriteBorder fontSize="small" />
+              <Label className="text-xs font-light">100</Label>
+            </button>
+          </FormBase>
+        </div>
+        <div className="cursor-pointer space-x-1">
+          <Visibility fontSize="small" />
+          <Label className="text-xs font-light">100</Label>
+        </div>
+        <div className="cursor-pointer space-x-1">
+          <BookmarkAddOutlined fontSize="small" />
+          <Label className="text-xs font-light">100</Label>
+        </div>
+        <div className="cursor-pointer space-x-1">
+          <IosShare fontSize="small" />
+          <Label className="text-xs font-light">100</Label>
+        </div>
       </div>
     </div>
   );

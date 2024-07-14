@@ -1,4 +1,16 @@
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+"use client";
+import { useAppSelector } from "@/store/hook";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "../ui/dialog";
+import { useEffect, useRef } from "react";
+import { random } from "@/store/global";
 
 const DialogBase = ({
   childrenTrigger,
@@ -14,6 +26,7 @@ const DialogBase = ({
   description?: string;
   onClick?: () => void;
 }) => {
+  const refClick = useRef<HTMLButtonElement>(null);
   return (
     <Dialog>
       <DialogTrigger asChild>{childrenTrigger}</DialogTrigger>
@@ -23,6 +36,7 @@ const DialogBase = ({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         {childrenContent}
+        <DialogClose ref={refClick}></DialogClose>
       </DialogContent>
     </Dialog>
   );

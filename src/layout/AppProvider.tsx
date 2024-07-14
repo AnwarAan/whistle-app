@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Header from "./Header";
 import { usePathname } from "next/navigation";
 import { Provider } from "react-redux";
-import { store } from "../lib/store";
+import { store } from "../store/store";
 
 interface Props {
   children: Readonly<React.ReactNode>;
@@ -12,6 +12,7 @@ interface Props {
 const AppProvider = ({ children }: Props) => {
   const pathname = usePathname();
   const queryClient = new QueryClient({ defaultOptions: {} });
+
   if (pathname === "/auth") {
     return (
       <QueryClientProvider client={queryClient}>

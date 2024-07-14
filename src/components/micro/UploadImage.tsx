@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useZod } from "@/lib/CustomHook";
 import { usePostApi } from "@/lib/service";
 import { Button } from "../ui/button";
-import { AddAPhoto, AlternateEmail } from "@mui/icons-material";
+import { AddAPhoto } from "@mui/icons-material";
 import FormBase, { FormInputFile } from "./FormBase";
 import Image from "next/image";
 import DialogBase from "./DialogBase";
@@ -50,7 +50,7 @@ const UploadImage = () => {
 
   return (
     <>
-      <FormBase form={formUpload} onSubmit={onSubmit}>
+      <FormBase form={formUpload} onSubmit={onSubmit} url="">
         <FormInputFile form={formUpload} name="file" hiddenFileInput={hiddenFileInput} handleChange={handleChange} />
         <Button className="rounded-full" onClick={() => handleClick()}>
           <AddAPhoto fontSize="small" />

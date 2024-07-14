@@ -1,10 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
 import { Form } from "../ui/form";
 import { Textarea } from "../ui/textarea";
+import { toast } from "sonner";
+import { usePostApi } from "@/lib/service";
+import { Toaster } from "../ui/sonner";
+import { redirect } from "next/navigation";
 
 interface PropsInput {
   form: any;
@@ -23,10 +27,11 @@ interface PropsInputFile {
   handleChange: (value: any) => void;
 }
 
-interface PropsInputBase {
+interface PropsInputBase<T> {
   children: Readonly<React.ReactNode>;
   form: any;
-  onSubmit: Function;
+  onSubmit?: Function;
+  url: string;
 }
 
 const FormInput = ({ form, name, placeHolder = "" }: PropsInput) => {
@@ -109,7 +114,44 @@ const FormInputFile = ({ form, name, hiddenFileInput, handleChange }: PropsInput
   );
 };
 
-const FormBase = ({ children, form, onSubmit }: PropsInputBase) => {
+const FormLogin = ({ children, form, url }: PropsInputBase<any>) => {
+  const onSubmit = async (values: any) => {
+    // mutate(values);
+  };
+  // const { mutate, data, isSuccess, isError, error } = usePostApi(url, {});
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     toast.success(`Success`);
+  //     redirect("/home");
+  //   }
+  //   //@ts-ignore
+  //   if (isError) toast.error(error.response?.data.message);
+  // }, [isSuccess, isError, error, data, url]);
+
+  return (
+    <div className="w-full">
+      <Toaster />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          {children}
+        </form>
+      </Form>
+    </div>
+  );
+};
+
+const FormBase = ({ children, form, url }: PropsInputBase<any>) => {
+  const onSubmit = async (values: any) => {
+    mutate(values);
+  };
+  const { mutate, data, isSuccess, isError, error } = usePostApi(url);
+  useEffect(() => {
+    if (isSuccess) toast.success(`Success`);
+    //@ts-ignore
+    if (isError) toast.error(error.response?.data.message);
+  }, [isSuccess, isError, error, data, url]);
+
   return (
     <div className="w-full">
       <Form {...form}>
@@ -121,5 +163,5 @@ const FormBase = ({ children, form, onSubmit }: PropsInputBase) => {
   );
 };
 
-export { FormBase, FormInput, FormInputPassword, FormInputText, FormInputFile };
+export { FormBase, FormLogin, FormInput, FormInputPassword, FormInputText, FormInputFile };
 export default FormBase;
