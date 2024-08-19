@@ -1,47 +1,27 @@
-import Login from "@/components/macro/Login";
-import Register from "@/components/macro/Register";
-import ButtonBase from "@/components/micro/ButtonBase";
-import DialogBase from "@/components/micro/DialogBase";
+import { Dialog } from "@/components/feature/Dialog";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import icons from "../../../public/assets/icon";
-import Image from "next/image";
-import { getCookie } from "@/lib/helpers";
+import FormLogin from "./FormLogin";
+import FormRegister from "./FormRegister";
+import { ModeToggle } from "@/components/feature/ModeToggle";
 
-const Authentication = async () => {
+export default async function Auth() {
   return (
     <div className="flex h-screen">
-      <div className="w-3/5 flex items-center place-content-center">
-        <Label className="text-8xl">BRAND</Label>
-      </div>
-      <div className="w-[320px] items-center flex flex-col place-content-center">
-        <ButtonBase
-          name="Sign up with Google"
-          icon={<Image src={icons.google} alt="icon" width={20} height={20} />}
-        ></ButtonBase>
-        <div className="flex items-center w-full">
-          <Separator className="w-[120px] dark:bg-slate-700" />
-          <span className="mx-auto">or</span>
-          <Separator className="w-[120px] dark:bg-slate-700" />
-        </div>
-        <div className="space-y-4">
-          <DialogBase
-            childrenTrigger={<ButtonBase name="Sign in" color="primary" />}
-            childrenContent={<Login />}
-            title="Create Your Account"
-          ></DialogBase>
-          <p className="text-xs">
-            By signing up, you agree to the Terms of Service and Privacy Policy, including Cookie Use.
-          </p>
-          <DialogBase
-            childrenTrigger={<ButtonBase name="Create account" color="dark" />}
-            childrenContent={<Register />}
-            title="Create Your Account"
-          ></DialogBase>
+      <div className="flex items-center place-content-center w-full justify-around">
+        <Label className="text-8xl font-bold">BRAND</Label>
+        <div className="flex flex-col space-y-2">
+          <ModeToggle />
+          <Dialog
+            className="dark:bg-white dark:hover:bg-slate-900 dark:text-black dark:hover:text-white"
+            childrenTrigger={"Login With Google"}
+            icon={icons.google}
+            childrenContent={<FormLogin />}
+          ></Dialog>
+          <Dialog childrenTrigger={"Login"} childrenContent={<FormLogin />}></Dialog>
+          <Dialog childrenTrigger={"Register"} childrenContent={<FormRegister />}></Dialog>
         </div>
       </div>
     </div>
   );
-};
-
-export default Authentication;
+}
