@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/layout/ThemeProvider";
-import AppProvider from "@/layout/AppProvider";
+import { Toaster } from "@/components/ui/sonner";
+import Header from "@/layout/Header";
+import { cookies } from "next/headers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,12 +18,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const login = cookies().get("whistle_token")?.value;
   return (
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-          <AppProvider>{children}</AppProvider>
+          {login ? <Header>{children}</Header> : children}
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );
