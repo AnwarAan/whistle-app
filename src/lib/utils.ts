@@ -34,4 +34,36 @@ const zodObject = (body: ZodRawShape) => {
   return z.object(body);
 };
 
-export { zodObject, zodType };
+export type ModelFormData = {
+  name: string;
+  type: string;
+};
+
+const generateFormData = (formData: FormData, model: ModelFormData[]) => {
+  const form: any = {};
+  model.map(({ name }) => {
+    form[name] = formData.get(name);
+  });
+  return form;
+};
+
+const generateMultipartFormData = (formData: FormData, model: ModelFormData[]) => {
+  const data = new FormData();
+  for (const { name, type } of model) {
+    switch (type) {
+      case "text":
+      case "text-area":
+        data.append(name, formData.get(name) as string);
+        break;
+      case "file":
+      case "image":
+        const file = formData.get(name) as unknown as File;
+        if (!file || file.size === 0) throw new Error("File Empry");
+        data.append(name, file);
+        break;
+    }
+  }
+  return data;
+};
+
+export { zodObject, zodType, generateFormData, generateMultipartFormData };
