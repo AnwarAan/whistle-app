@@ -1,28 +1,17 @@
-// "use client";
-import Post from "@/components/macro/Post";
-import post from "@/data/post";
-import Posting from "@/components/macro/Posting";
-import FormBase, { FormInputText } from "@/components/micro/FormBase";
-import { useZod } from "@/lib/CustomHook";
-import { postingSchema } from "@/lib/schema";
-import { Button } from "@/components/ui/button";
-import { Toaster } from "sonner";
+import { getData } from "@/action/action";
+import PostList from "./PostList";
+import Posting from "./Posting";
+import Container from "@/components/ui/container";
 
-const Home = async () => {
-  // const defaultLogin = { email: "", password: "" };
-  // const form = useZod(postingSchema, defaultLogin);
-
+export default async function Home() {
+  const url = `/post`;
+  const data = await getData(url);
   return (
-    <div>
-      {/* <FormBase form={form} url="">
+    <Container>
+      <div className="flex flex-col">
         <Posting />
-        <FormInputText className="rounded-2xl text-xl p-4" form={form} name="content" />
-        <Button className="rounded-full">Post</Button>
-      </FormBase> */}
-      <Post data={post} />
-      <Toaster />
-    </div>
+        <PostList data={data} />
+      </div>
+    </Container>
   );
-};
-
-export default Home;
+}
