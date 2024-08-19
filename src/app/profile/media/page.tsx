@@ -1,5 +1,7 @@
-const ProdileMedia = () => {
-  return <div>Media</div>;
-};
-
-export default ProdileMedia;
+export default function Likes() {
+  return (
+    <>
+      <h1>media</h1>
+    </>
+  );
+}

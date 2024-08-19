@@ -1,5 +1,7 @@
-const ProdileArticle = () => {
-  return <div>Article</div>;
-};
-
-export default ProdileArticle;
+export default function Article() {
+  return (
+    <>
+      <h1>article</h1>
+    </>
+  );
+}
