@@ -16,7 +16,7 @@ export default function InputModel({ model }: Props<string, number>) {
             return <Textarea className={`${display ? "" : "hidden"}`} key={i} name={name} placeholder={title} />;
           case "file":
             return (
-              <Input type={type} className={`${display ? "" : "hidden"}`} key={i} name={name} placeholder={title} />
+              <Input type={type} className={`${display ? "" : "hidden"}`} key={i} name={name} placeholder={"title"} />
             );
 
           // return <UploadImage key={i} />;

@@ -36,12 +36,10 @@ export function Form({ children, action, model, to }: Props<string, ModelFormDat
   };
   return (
     <div className="w-full">
-      {/* <FormUi {...form}> */}
       <form action={clientACtion} className="space-y-8 flex flex-col">
         {children}
         <Button type="submit">Submit</Button>
       </form>
-      {/* </FormUi> */}
     </div>
   );
 }
