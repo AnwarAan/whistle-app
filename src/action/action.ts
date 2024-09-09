@@ -86,6 +86,20 @@ export async function postMultipartFormData(formData: FormData, model: Model<str
   revalidatePath(`/home`);
 }
 
+export async function posting(formData: FormData,) {
+  const url = "/api/post";
+  const data = new FormData();
+  const file = formData.get("file") as unknown as File;
+  if (!file || file.size === 0) throw new Error("File Empty");
+  data.append("file", file);
+  try {
+    await axiosClient.post(url);
+  } catch (error) {
+    return { error: errorMessage(error) };
+  }
+  revalidatePath(`/*`);
+}
+
 export async function postFormDataNoAuth(formData: FormData, model: Model<string>) {
   const form = generateMultipartFormData(formData, model.structure);
   try {
@@ -93,6 +107,8 @@ export async function postFormDataNoAuth(formData: FormData, model: Model<string
   } catch (error) {
     return { error: errorMessage(error) };
   }
+  revalidatePath(`/*`);
+
 }
 
 export async function uploadFile(formData: FormData) {
@@ -106,16 +122,16 @@ export async function uploadFile(formData: FormData) {
   } catch (error) {
     return { error: errorMessage(error) };
   }
+  revalidatePath(`/*`);
 }
 
 export async function actionFollow(formData: FormData) {
   const followedId = formData.get("id");
   const url = `/user-follower/follow/${followedId}`;
-  console.log("followedId", followedId);
   try {
     await axiosClient.post(url, {}, { headers: getToken() });
   } catch (error) {
-    // console.log(error);
     return { error: errorMessage(error) };
   }
+  revalidatePath(`/*`);
 }

@@ -10,14 +10,15 @@ export interface PropsCard<N, S> {
   content: S;
   imageId: N;
   userName: N;
+  userImageId?: S
 }
 
-export default function Card({ user, imageUrl, content, imageId, userName }: PropsCard<number, string>) {
+export default function Card({ content, imageId, userName, userImageId }: PropsCard<number, string>) {
   return (
     <CardUi className="w-max-[800px] rounded-2xl">
       <CardHeader>
         <div className="flex items-center space-x-2">
-          <Avatar imageUrl={`${process.env.NEXT_PUBLIC_BASE_URL}/files/download-image/${imageId}`} />
+          <Avatar imageUrl={`${process.env.NEXT_PUBLIC_BASE_URL}/files/download-image/${userImageId}`} />
           <Label className="text-2xl">{userName}</Label>
         </div>
       </CardHeader>

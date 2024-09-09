@@ -17,14 +17,13 @@ interface Props {
 export default async function ProfileLayout({ children }: Props) {
   const data = await Authentication();
   const date = moment(new Date("2000-01-01")).format("ll");
-
   return (
     <div className="flex flex-col w-full">
       <Container>
         <div>
           <Avatar
             className="h-40 w-40"
-            imageUrl={`${process.env.NEXT_PUBLIC_BASE_URL}/files/download-image/${data.userImageId}`}
+            imageUrl={`${process.env.NEXT_PUBLIC_BASE_URL}/files/download-image/${data.imageId}`}
           />
           <p className="text-2xl">{data.name}</p>
           <p className="dark:text-slate-400 font-light">@{data.name}</p>
@@ -34,11 +33,11 @@ export default async function ProfileLayout({ children }: Props) {
           </div>
           <div className="flex space-x-4">
             <div className="flex space-x-2 items-center">
-              <p className="font-light">{1000}</p>
+              <p className="font-light">{data.followed}</p>
               <p className="dark:text-slate-400 font-light">Following</p>
             </div>
             <div className="flex space-x-2 items-center">
-              <p className="font-light">{1000}</p>
+              <p className="font-light">{data.follower}</p>
               <p className="dark:text-slate-400 font-light">Followers</p>
             </div>
           </div>

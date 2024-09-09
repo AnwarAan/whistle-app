@@ -4,19 +4,20 @@ import Avatar from "./Avatar";
 import { Label } from "../ui/label";
 import moment from "moment";
 import { Separator } from "../ui/separator";
-import Image from "next/image";
-import { Form } from "../ui/form";
 import { Input } from "../ui/input";
-import { actionFollow, postFormData, uploadFile } from "@/action/action";
+import { actionFollow, getData, postFormData, uploadFile } from "@/action/action";
 import UploadImage from "./UploadImage";
 import { Button } from "../ui/button";
 
 interface Props {
-  data: { id: number; name: string; imageId: string };
+  data: { id: number; name: string; imageId: string, follower: number, followed: number };
 }
 
-export default function UserDetail({ data }: Props) {
+export default async function UserDetail({ data }: Props) {
   const date = moment(new Date("2000-01-01")).format("ll");
+  const url = `/user-follower/current-follow/${data.id}`
+  const currentFollow = await getData(url)
+
   return (
     <div className="w-full">
       <Container>
@@ -25,7 +26,7 @@ export default function UserDetail({ data }: Props) {
             <UploadImage imageUrl={data.imageId} />
             <form action={actionFollow}>
               <Input className="hidden" name="id" value={data.id} />
-              <Button>Follow</Button>
+              <Button>{currentFollow ? 'Unfollow' : 'Follow'}</Button>
             </form>
           </div>
           <p className="text-2xl">{data.name}</p>
@@ -36,11 +37,11 @@ export default function UserDetail({ data }: Props) {
           </div>
           <div className="flex space-x-4">
             <div className="flex space-x-2 items-center">
-              <p className="font-light">{1000}</p>
+              <p className="font-light">{data.followed}</p>
               <p className="dark:text-slate-400 font-light">Following</p>
             </div>
             <div className="flex space-x-2 items-center">
-              <p className="font-light">{1000}</p>
+              <p className="font-light">{data.follower}</p>
               <p className="dark:text-slate-400 font-light">Followers</p>
             </div>
           </div>
