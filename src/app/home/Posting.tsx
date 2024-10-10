@@ -1,10 +1,12 @@
 'use client'
 import { posting } from "@/action/action";
+import { Form } from "@/components/feature/Form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useRef, useState } from "react";
-import { AddPhotoAlternateOutlined } from '@mui/icons-material'
 import { Textarea } from "@/components/ui/textarea";
+import { AddPhotoAlternateOutlined, InsertEmoticonOutlined } from '@mui/icons-material';
+import { useRef, useState } from "react";
+import model from "@/model/posting";
 import Avatar from "@/components/feature/Avatar";
 
 export default function Posting({ imageId }: { imageId: string }) {
@@ -21,33 +23,43 @@ export default function Posting({ imageId }: { imageId: string }) {
     const selectedFile = files as FileList;
     setPreview(URL.createObjectURL(selectedFile[0]));
   };
+
+
+  const [showPicker, setShowPicker] = useState(false);
+  const [selectedEmoji, setSelectedEmoji] = useState('');
+
+  const togglePicker = () => {
+    setShowPicker(!showPicker);
+  };
+
+  const handleEmojiClick = (emoji: any) => {
+    setSelectedEmoji(emoji);
+  };
   return (
     <>
-
-      <form action={posting}>
+      <Form model={model} action={posting} >
         <Input className="hidden" name="file" type="file" ref={refInput} onChange={handleChange} />
         <div className="flex">
           <Avatar
-            className="h-20 w-20"
+            className="h-16 w-16"
             imageUrl={`${process.env.NEXT_PUBLIC_BASE_URL}/files/download-image/${imageId}`}
           />
-          <Textarea></Textarea>
-
+          <Textarea name="content" />
         </div>
-        <div className="flex w-full justify-content-center space-y-2">
-          <div className="dark:bg-[#1DA1F2] rounded-full w-10 h-10 items-center flex" onClick={handleClick} >
-            <AddPhotoAlternateOutlined className="cursor-pointer mx-auto" />
-          </div>
+        <div className="flex w-full justify-content-between space-y-2 items-center">
+          <span onClick={handleClick} >
+            <AddPhotoAlternateOutlined className="cursor-pointer mx-auto dark:text-[#1DA1F2] text-[#1DA1F2]" fontSize="small" />
+          </span>
+          <span onClick={handleEmojiClick}>
+            <InsertEmoticonOutlined className="cursor-pointer mx-auto dark:text-[#1DA1F2] text-[#1DA1F2]" fontSize="small" />
+          </span>
           <div>
-            <Button className="h-6">
-              Post
-            </Button>
           </div>
         </div>
-      </form>
-      {/* <Form action={postMultipartFormData} model={model}>
-        <InputModel model={model} />
-      </Form> */}
+        <Button className="h-8">
+          Post
+        </Button>
+      </Form>
     </>
   );
 }

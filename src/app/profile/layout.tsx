@@ -1,7 +1,3 @@
-import Avatar from "@/components/feature/Avatar";
-import { jwtDecode } from "jwt-decode";
-import { cookies } from "next/headers";
-import { getData } from "@/action/action";
 import { Label } from "@/components/ui/label";
 import { CalendarMonthOutlined } from "@mui/icons-material";
 import { Separator } from "@/components/ui/separator";
@@ -9,6 +5,7 @@ import ProfileMenu from "@/components/menu/ProfileMenu";
 import Container from "@/components/ui/container";
 import moment from "moment";
 import { Authentication } from "@/components/feature/Authentication";
+import UploadImage from "@/components/feature/UploadImage";
 
 interface Props {
   children: Readonly<React.ReactNode>;
@@ -21,12 +18,9 @@ export default async function ProfileLayout({ children }: Props) {
     <div className="flex flex-col w-full">
       <Container>
         <div>
-          <Avatar
-            className="h-40 w-40"
-            imageUrl={`${process.env.NEXT_PUBLIC_BASE_URL}/files/download-image/${data.imageId}`}
-          />
+          <UploadImage imageUrl={data.imageId} />
           <p className="text-2xl">{data.name}</p>
-          <p className="dark:text-slate-400 font-light">@{data.name}</p>
+          <p className="dark:text-slate-400 font-light">@{data.nickname}</p>
           <div className="flex dark:text-slate-400 items-center space-x-2">
             <CalendarMonthOutlined sx={{ fontSize: 20 }} />
             <Label className="dark:text-slate-400 font-light">{date}</Label>

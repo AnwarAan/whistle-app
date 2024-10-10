@@ -30,6 +30,12 @@ const getToken = () => {
   return bearerToken;
 };
 
+const multipartConfig = () => {
+  return {
+    headers: { "content-type": "multipart/form-data", Authorization: getToken().Authorization },
+  }
+}
+
 export async function getData(url: string) {
   try {
     const { data } = await axiosClient.get(url, { headers: getToken() });
@@ -87,17 +93,19 @@ export async function postMultipartFormData(formData: FormData, model: Model<str
 }
 
 export async function posting(formData: FormData,) {
-  const url = "/api/post";
-  const data = new FormData();
+  const url = "/post";
+  const form = new FormData();
   const file = formData.get("file") as unknown as File;
-  if (!file || file.size === 0) throw new Error("File Empty");
-  data.append("file", file);
+
+  form.append("image", file);
+  form.append('content', formData.get('content') as string);
   try {
-    await axiosClient.post(url);
+    const { data } = await axiosClient.post(url, form, multipartConfig());
+    revalidatePath(`/*`);
+    return data
   } catch (error) {
     return { error: errorMessage(error) };
   }
-  revalidatePath(`/*`);
 }
 
 export async function postFormDataNoAuth(formData: FormData, model: Model<string>) {
@@ -112,13 +120,16 @@ export async function postFormDataNoAuth(formData: FormData, model: Model<string
 }
 
 export async function uploadFile(formData: FormData) {
-  const url = "/api/upload";
-  const data = new FormData();
+  const url = "/user/upload";
+  const form = new FormData();
   const file = formData.get("file") as unknown as File;
   if (!file || file.size === 0) throw new Error("File Empty");
-  data.append("file", file);
+  form.append("image", file);
   try {
-    await axiosClient.post(url);
+    const { data } = await axiosClient.post(url, form, {
+      headers: { "content-type": "multipart/form-data", Authorization: getToken().Authorization },
+    });
+    return data
   } catch (error) {
     return { error: errorMessage(error) };
   }

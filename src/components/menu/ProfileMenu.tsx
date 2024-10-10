@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import Container from "../ui/container";
 
 const listMenu = [
   {
@@ -29,13 +30,15 @@ export default function ProfileMenu() {
   };
 
   return (
-    <div className="flex justify-between">
-      {listMenu.map(({ name, to }, i) => (
-        <Link className="space-y-2" key={i} href={to} onClick={() => handleClick(i)}>
-          <p className="px-2">{name}</p>
-          <div className={`${i === selectIndex ? "border-2 rounded-full border-[#1DA1F2]" : ""} `}></div>
-        </Link>
-      ))}
-    </div>
+    <Container>
+      <div className="flex justify-between">
+        {listMenu.map(({ name, to }, i) => (
+          <Link className="space-y-2" key={i} href={to} onClick={() => handleClick(i)}>
+            <p >{name}</p>
+            <div className={`${i === selectIndex ? "border-2 rounded-full border-[#1DA1F2]" : ""} `}></div>
+          </Link>
+        ))}
+      </div>
+    </Container>
   );
 }

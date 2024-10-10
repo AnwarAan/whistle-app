@@ -1,8 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { ModelFormData } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { ReactNode } from "react";
+import { toast } from "sonner";
 
 interface Props<S, T> {
   children?: Readonly<React.ReactNode>;
@@ -11,15 +12,16 @@ interface Props<S, T> {
     model: { structure: T; url: S }
   ) => Promise<
     | {
-        error: void;
-      }
+      error: void;
+    }
     | undefined
   >;
   model: { structure: T; url: S };
   to?: S;
+  defautBtn?: boolean
 }
 
-export function Form({ children, action, model, to }: Props<string, ModelFormData[]>) {
+export function Form({ children, action, model, to, defautBtn = false }: Props<string, ModelFormData[]>) {
   const router = useRouter();
   const clientACtion = async (formData: FormData) => {
     const res = await action(formData, model);
@@ -38,7 +40,7 @@ export function Form({ children, action, model, to }: Props<string, ModelFormDat
     <div className="w-full">
       <form action={clientACtion} className="space-y-8 flex flex-col">
         {children}
-        <Button type="submit">Submit</Button>
+        {defautBtn && <Button type="submit">Submit</Button>}
       </form>
     </div>
   );

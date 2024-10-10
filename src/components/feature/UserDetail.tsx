@@ -1,13 +1,13 @@
 import { CalendarMonthOutlined } from "@mui/icons-material";
-import Container from "../ui/container";
-import Avatar from "./Avatar";
 import { Label } from "../ui/label";
-import moment from "moment";
 import { Separator } from "../ui/separator";
 import { Input } from "../ui/input";
 import { actionFollow, getData, postFormData, uploadFile } from "@/action/action";
-import UploadImage from "./UploadImage";
 import { Button } from "../ui/button";
+import UploadImage from "./UploadImage";
+import Container from "../ui/container";
+import Avatar from "./Avatar";
+import moment from "moment";
 
 interface Props {
   data: { id: number; name: string; imageId: string, follower: number, followed: number };
@@ -23,7 +23,10 @@ export default async function UserDetail({ data }: Props) {
       <Container>
         <div>
           <div className="flex items-end justify-between">
-            <UploadImage imageUrl={data.imageId} />
+            <Avatar
+              className="h-40 w-40"
+              imageUrl={`${process.env.NEXT_PUBLIC_BASE_URL}/files/download-image/${data.imageId}`}
+            />
             <form action={actionFollow}>
               <Input className="hidden" name="id" value={data.id} />
               <Button>{currentFollow ? 'Unfollow' : 'Follow'}</Button>
